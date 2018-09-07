@@ -293,8 +293,7 @@ def adversarial_selection(model, unlabelled_data, nb_data):
     subset_index = np.random.permutation(len(unlabelled_data[0]))
     subset = unlabelled_data[0][subset_index[:n]]
     adversarial = active.generate(subset)
-    idx = adversarial[:nb_data]
-    print(idx)
+    idx = adversarial[:nb_data][0]
     index_query = subset_index[idx]
     index_unlabelled = np.concatenate( (subset_index[adversarial[nb_data:]], subset_index[n:]))
 
