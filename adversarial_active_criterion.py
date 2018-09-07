@@ -108,7 +108,7 @@ class Adversarial_DeepFool(Adversarial_example):
         adv_images = []
         for i in range(len(data)):
             samples = self.generate_sample(data[i:i+1])
-            print(samples.shape, samples)
+            print(len(samples))
             r_i, x_i =  samples
             perturbations.append(r_i)
             adv_images.append(x_i[0])
