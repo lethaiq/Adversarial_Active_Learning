@@ -80,7 +80,7 @@ class Adversarial_DeepFool(Adversarial_example):
         grad_adversarial = K.gradients(loss_classif, self.adversarial_image)
 
         f_loss_ = K.function([K.learning_phase(), self.adversarial_image, self.adversarial_target], [loss_classif])
-        f_grad_ = K.function([K.learning_phase(), self.adversarial_image, self.adversarial_target], [grad_adversarial])
+        f_grad_ = K.function([K.learning_phase(), self.adversarial_image, self.adversarial_target], grad_adversarial)
 
         self.f_loss = f_loss_[0]
         self.f_grad = f_grad_[0]
