@@ -88,15 +88,15 @@ class Adversarial_DeepFool(Adversarial_example):
         def eval_loss(x,y):
             y_vec = np.zeros((1, self.nb_class))
             y_vec[:,y] +=1
-            return self.f_loss([0., x, y_vec])
+            return np.array(self.f_loss([0., x, y_vec]))
         
         def eval_grad(x,y):
             y_vec = np.zeros((1, self.nb_class))
             y_vec[:,y] +=1
-            return self.f_grad([0., x, y_vec]) 
+            return np.array(elf.f_grad([0., x, y_vec]))
         
-        self.eval_loss = np.array(eval_loss)
-        self.eval_grad = np.array(eval_grad)
+        self.eval_loss = eval_loss
+        self.eval_grad = eval_grad
         
     
     def generate(self, data):
