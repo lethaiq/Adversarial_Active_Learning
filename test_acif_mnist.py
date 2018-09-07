@@ -122,7 +122,7 @@ def active_training(labelled_data,
                   shuffle=True,
                   validation_split=0.2, 
                   callbacks=[earlyStopping],
-                  verbose=1)
+                  verbose=0)
         loss, acc = model.evaluate(x_L, y_L, verbose=0)
         if loss < best_loss:
             best_loss = loss;
