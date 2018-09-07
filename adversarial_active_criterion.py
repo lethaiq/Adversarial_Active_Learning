@@ -79,8 +79,11 @@ class Adversarial_DeepFool(Adversarial_example):
         loss_classif = K.mean(out[0, sortidx])
 
         grad_adversarial = K.gradients(loss_classif, self.adversarial_image)
-        self.f_loss = K.function([K.learning_phase(), self.adversarial_image, self.adversarial_target], [loss_classif])
-        self.f_grad = K.function([K.learning_phase(), self.adversarial_image, self.adversarial_target], [grad_adversarial])
+        f_loss_ = K.function([K.learning_phase(), self.adversarial_image, self.adversarial_target], [loss_classif])
+        f_grad_ = K.function([K.learning_phase(), self.adversarial_image, self.adversarial_target], [grad_adversarial])
+        print(f_loss, f_grad)
+        self.f_loss = f_loss[0]
+        self.f_grad = f_grad[0]
         
         def eval_loss(x,y):
             y_vec = np.zeros((1, self.nb_class))
