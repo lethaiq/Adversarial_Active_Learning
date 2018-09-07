@@ -107,7 +107,9 @@ class Adversarial_DeepFool(Adversarial_example):
         perturbations = []
         adv_images = []
         for i in range(len(data)):
-            r_i, x_i = self.generate_sample(data[i:i+1])
+            samples = self.generate_sample(data[i:i+1])
+            print(samples.shape, samples)
+            r_i, x_i =  samples
             perturbations.append(r_i)
             adv_images.append(x_i[0])
         
@@ -147,6 +149,7 @@ class Adversarial_DeepFool(Adversarial_example):
             
         adv_image = x_i
         adv_label = self.predict(adv_image)
+
         if adv_label == true_label:
             return np.inf, x_i
         else:
