@@ -122,6 +122,7 @@ class Adversarial_DeepFool(Adversarial_example):
         true_label = self.predict(true_image)
 
         x_i = np.copy(true_image); i=0
+        
         while self.predict(x_i) == true_label and i<10:
             other_labels = list(range(self.nb_class))
             if true_label in other_labels:
@@ -139,8 +140,8 @@ class Adversarial_DeepFool(Adversarial_example):
             
             r_i = (f_labels[label_adv]/(np.sum(np.abs(w_labels[label_adv])))**2)*np.sign(w_labels[label_adv])
             #print(self.predict(x_i), f_labels[label_adv], np.mean(x_i), np.mean(r_i))
-            if np.max(np.isnan(r_i))==True:
-                return False, true_image, true_image, true_label
+            # if np.max(np.isnan(r_i))==True:
+                # return False, true_image, true_image, true_label
             x_i += r_i.reshape(true_image.shape)
             #x_i = np.clip(x_i, self.mean - self.std, self.mean+self.std)
             i+=1
@@ -150,12 +151,8 @@ class Adversarial_DeepFool(Adversarial_example):
         adv_label = self.predict(adv_image)
 
         if adv_label == true_label:
-            print('1')
-            print(np.inf, x_i)
             return np.inf, x_i
         else:
             perturbation = (x_i - true_image).flatten()
-            print('2')
-            print(np.linalg.norm(perturbation), x_i)
             return np.linalg.norm(perturbation), x_i
 
