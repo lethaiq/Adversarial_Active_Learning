@@ -140,6 +140,7 @@ def evaluate(model, percentage, test_data, nb_exp, repo, filename):
         writer = csv.writer(csvfile, delimiter=';',
                             quotechar='|', quoting=csv.QUOTE_MINIMAL)
         writer.writerow([str(nb_exp), str(percentage), str(loss), str(acc)])
+    return loss, acc
         
 def active_selection(model, unlabelled_data, nb_data, active_method, threshold=0.5):
     assert active_method in ['uncertainty', 'adversarial', 'egl', 'qbc', 'random'], ('Unknown active criterion %s', active_method)
@@ -325,7 +326,7 @@ def active_learning(num_sample=32, percentage=0.3,
                                                   nb_data=nb_query,
                                                   threshold=threshold)
         
-        evaluate(model, percentage_data, test_data, nb_exp, repo, filename)
+        loss, acc = evaluate(model, percentage_data, test_data, nb_exp, repo, filename)
         
         # add query to the labelled set
         labelled_data_0 = np.concatenate((labelled_data[0], query[0]), axis=0)
@@ -334,8 +335,9 @@ def active_learning(num_sample=32, percentage=0.3,
         #update percentage_data
         #percentage_data = 1.*len(labelled_data[0])/len(unlabelled_data[0])
         percentage_data = 1.*(n_start+ i*nb_query)/N_pool
-        print(percentage_data)
         
+        print("percentage_data:{} | loss:{} | acc:{}".format(percentage_data, loss, acc))
+
         if len(unlabelled_data[0])==0:
             print("no more data")
             return
