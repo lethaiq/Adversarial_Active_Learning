@@ -48,7 +48,7 @@ class Adversarial_example(object):
         
         
         prediction = self.model.call(self.adversarial_image)
-        self.predict_ = K.function([K.learning_phase(), [self.adversarial_image]], K.argmax(prediction, axis=1))
+        self.predict_ = K.function([K.learning_phase(), self.adversarial_image], [K.argmax(prediction, axis=1)])
 
         
     def generate(data):
