@@ -122,7 +122,7 @@ class Adversarial_DeepFool(Adversarial_example):
 
         x_i = np.copy(true_image); i=0
         while self.predict(x_i) == true_label and i<10:
-            other_labels = range(self.nb_class)
+            other_labels = list(range(self.nb_class))
             other_labels.remove(true_label)
             w_labels=[]; f_labels=[]
             for k in other_labels:
