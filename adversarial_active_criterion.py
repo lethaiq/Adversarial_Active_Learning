@@ -77,11 +77,10 @@ class Adversarial_DeepFool(Adversarial_example):
         sortidx = K.argmax(self.adversarial_target)[0]
         out = second_model.call(self.adversarial_image)
         loss_classif = K.mean(out[0, sortidx])
-
         grad_adversarial = K.gradients(loss_classif, self.adversarial_image)
+        
         f_loss_ = K.function([K.learning_phase(), self.adversarial_image, self.adversarial_target], [loss_classif])
-        f_grad_ = K.function([K.learning_phase(), self.adversarial_image, self.adversarial_target], [grad_adversarial])
-        print(f_loss, f_grad)
+        f_grad_ = K.function([K.learning_phase(), self.adversarial_image, self.adversarial_target], grad_adversarial)
         self.f_loss = f_loss[0]
         self.f_grad = f_grad[0]
         
