@@ -316,7 +316,7 @@ def active_learning(num_sample=32, percentage=0.3,
     i=0
     while( percentage_data<=percentage):
 
-        #print(i)
+        # print(i)
         i+=1
         model = active_training(labelled_data, batch_size=batch_size)
         query, unlabelled_data = active_selection(model=model, 
@@ -334,6 +334,8 @@ def active_learning(num_sample=32, percentage=0.3,
         #update percentage_data
         #percentage_data = 1.*len(labelled_data[0])/len(unlabelled_data[0])
         percentage_data = 1.*(n_start+ i*nb_query)/N_pool
+        print(percentage_data)
+        
         if len(unlabelled_data[0])==0:
             print("no more data")
             return
